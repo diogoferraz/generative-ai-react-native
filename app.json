@@ -23,6 +23,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "80bc6a93-e5ad-4898-a08a-42da176123f9"
+      }
+    },
+    "owner": "diogoferraz"
   }
 }
