@@ -1,0 +1,1 @@
+Mobile App that communicate with Open Ai and with Azure vision api
