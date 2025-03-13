@@ -102,7 +102,7 @@ export default function HomeScreen({ navigation }: any) {
   }
 
   const fetchImageAnalysis = async () => {
-    const subscriptionKey = '83b81a6cc2a94ba7904a41ee76ab197e';
+    const subscriptionKey = '';
     const endpoint = 'https://aistudentservice.cognitiveservices.azure.com/';
     const url = `${endpoint}/computervision/imageanalysis:analyze?features=caption,read&model-version=latest&language=en&api-version=2024-02-01`;
 
