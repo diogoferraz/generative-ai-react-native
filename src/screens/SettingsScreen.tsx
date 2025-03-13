@@ -6,12 +6,18 @@ const statusBarHeight = StatusBar.currentHeight
 
 export default function SettingsScreen({ navigation }: any) {
   const [apiKey, setApiKey] = useState('');
+  const [googleApiKey, setGoogleApiKey] = useState('');
 
   useEffect(() => {
     const loadApiKey = async () => {
       const storedApiKey = await AsyncStorage.getItem('apiKey');
+      const storedGoogleApiKey = await AsyncStorage.getItem('googleApiKey');
+
       if (storedApiKey) {
         setApiKey(storedApiKey);
+      }
+      if (storedGoogleApiKey) {
+        setGoogleApiKey(storedGoogleApiKey);
       }
     };
     loadApiKey();
@@ -22,7 +28,15 @@ export default function SettingsScreen({ navigation }: any) {
     Alert.alert('API Key saved!','', [
       {
         text: 'OK',
-        onPress: () => navigation.goBack(),
+      },
+    ]);
+  };
+
+  const saveGoogleApiKey = async () => {
+    await AsyncStorage.setItem('googleApiKey', googleApiKey);
+    Alert.alert('Google API Key saved!','', [
+      {
+        text: 'OK',
       },
     ]);
   };
@@ -30,13 +44,25 @@ export default function SettingsScreen({ navigation }: any) {
   return (
     <View style={styles.container} >
       <Text style={styles.heading}>Settings Screen</Text>
+      <View>
         <TextInput
-        	placeholder="Enter API Key"
-        	style={styles.input}
+          placeholder="Enter API Key"
+          style={styles.input}
           value={apiKey}
           onChangeText={setApiKey}
         />
-      <Pressable style={styles.button} onPress={saveApiKey}><Text style={styles.buttonText}>Save API Key</Text></Pressable>
+        <Pressable style={styles.button} onPress={saveApiKey}><Text style={styles.buttonText}>Save API Key</Text></Pressable>
+      </View>
+      <View>
+        <TextInput
+          placeholder="Enter AI Vision API Key"
+          style={styles.input}
+          value={googleApiKey}
+          onChangeText={setGoogleApiKey}
+        />
+        <Pressable style={styles.button} onPress={saveGoogleApiKey}><Text style={styles.buttonText}>Save API Key</Text></Pressable>
+      </View>
+      <Pressable style={styles.button} onPress={() => navigation.goBack()}><Text style={styles.buttonText}>Back to Home</Text></Pressable>
     </View>
   );
 }

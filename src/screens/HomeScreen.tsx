@@ -64,7 +64,7 @@ export default function HomeScreen({ navigation }: any) {
     setLoading(true);
     Keyboard.dismiss();
 
-    const prompt = `${winePrompt}\nNome do vinho: ${wineName ? wineName : "Nenhuma nome fornecida"}\nImagem: ${image ? image : "Nenhuma imagem fornecida"}`;
+    const prompt = `${winePrompt}\nNome do vinho: ${wineName ? wineName : "Nenhuma nome fornecida"}`;
 
     try {
       const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -100,6 +100,32 @@ export default function HomeScreen({ navigation }: any) {
       setLoading(false);
     }
   }
+
+  const fetchImageAnalysis = async () => {
+    const subscriptionKey = '83b81a6cc2a94ba7904a41ee76ab197e';
+    const endpoint = 'https://aistudentservice.cognitiveservices.azure.com/';
+    const url = `${endpoint}/computervision/imageanalysis:analyze?features=caption,read&model-version=latest&language=en&api-version=2024-02-01`;
+
+    const body = JSON.stringify({
+      url: 'https://learn.microsoft.com/azure/ai-services/computer-vision/media/quickstarts/presentation.png'
+    });
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Ocp-Apim-Subscription-Key': subscriptionKey,
+          'Content-Type': 'application/json'
+        },
+        body: body
+      });
+
+      const result = await response.json();
+      console.log(result);
+    } catch (error) {
+      console.error('Error fetching image analysis:', error);
+    }
+  };
 
   return (
     <View style={styles.container}>
